@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pakistan Embassy Beijing — Commercial Section Agent</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=IBM+Plex+Sans:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #1a5c2a;
+    --green-mid: #2d7a40;
+    --green-light: #3d9952;
+    --white: #f7f5f0;
+    --cream: #ede9e0;
+    --gold: #b8933a;
+    --gold-light: #d4aa55;
+    --dark: #0e1a12;
+    --text: #1c2b20;
+    --muted: #5a7060;
+    --border: #c8d8cc;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'IBM Plex Sans', sans-serif; background: var(--dark); color: var(--white); min-height: 100vh; display: flex; flex-direction: column; }
+
+header {
+background: linear-gradient(135deg, var(–dark) 0%, #0d2414 60%, #142b1a 100%);
+border-bottom: 2px solid var(–gold);
+padding: 18px 24px 14px;
+display: flex; align-items: center; gap: 16px;
+position: sticky; top: 0; z-index: 100;
+}
+.flag-stripe { display: flex; flex-direction: column; width: 6px; height: 48px; border-radius: 2px; overflow: hidden; flex-shrink: 0; }
+.flag-stripe .green { background: #01411C; flex: 1; }
+.flag-stripe .white { background: #fff; width: 6px; flex: 0 0 2px; }
+.header-text { flex: 1; }
+.header-text h1 { font-family: ‘Playfair Display’, serif; font-size: 1rem; font-weight: 700; color: var(–gold-light); letter-spacing: 0.02em; line-height: 1.2; }
+.header-text p { font-size: 0.7rem; color: var(–muted); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; font-weight: 300; }
+.api-badge { display: flex; align-items: center; gap: 6px; font-size: 0.65rem; color: var(–muted); font-family: ‘IBM Plex Mono’, monospace; }
+.api-dot { width: 7px; height: 7px; border-radius: 50%; background: #22c55e; animation: pulse 2s infinite; flex-shrink: 0; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+
+#mainApp { display: flex; flex: 1; flex-direction: column; max-width: 900px; width: 100%; margin: 0 auto; padding: 20px 16px 100px; }
+
+.tool-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 20px; }
+@media(min-width:600px){ .tool-grid { grid-template-columns: repeat(4,1fr); } }
+.tool-btn { background: #0d2414; border: 1.5px solid #2a4030; border-radius: 10px; padding: 14px 10px; cursor: pointer; transition: all 0.2s; text-align: center; display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.tool-btn:hover, .tool-btn.active { border-color: var(–gold); background: #142b1a; }
+.tool-btn.active .tool-icon { color: var(–gold-light); }
+.tool-icon { font-size: 1.4rem; }
+.tool-label { font-size: 0.7rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; color: var(–muted); line-height: 1.3; }
+.tool-btn.active .tool-label { color: var(–cream); }
+
+.panel { background: #0d2414; border: 1px solid #2a4030; border-radius: 12px; padding: 22px 20px 18px; margin-bottom: 16px; display: none; }
+.panel.active { display: block; animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px)} to{opacity:1;transform:translateY(0)} }
+.panel h3 { font-family: ‘Playfair Display’, serif; color: var(–gold-light); font-size: 1rem; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase; color: var(–muted); margin-bottom: 5px; }
+.form-group input, .form-group textarea, .form-group select { width: 100%; background: var(–dark); border: 1px solid #2a4030; border-radius: 8px; padding: 10px 14px; font-family: ‘IBM Plex Sans’, sans-serif; font-size: 0.84rem; color: var(–white); outline: none; resize: vertical; transition: border 0.2s; }
+.form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(–gold); }
+.form-group select option { background: var(–dark); }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+@media(max-width:480px){ .form-row { grid-template-columns: 1fr; } }
+
+.generate-btn { width: 100%; background: linear-gradient(90deg, var(–green), var(–green-mid)); color: #fff; border: none; border-radius: 10px; padding: 13px; font-family: ‘IBM Plex Sans’, sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; letter-spacing: 0.04em; transition: opacity 0.2s; margin-top: 4px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.generate-btn:hover { opacity: 0.88; }
+.generate-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+#outputSection { background: #0d2414; border: 1px solid var(–gold); border-radius: 12px; padding: 22px 20px; display: none; animation: fadeIn 0.3s ease; }
+#outputSection h3 { font-family: ‘Playfair Display’, serif; color: var(–gold-light); font-size: 1rem; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; }
+.output-actions { display: flex; gap: 8px; }
+.btn-sm { background: transparent; border: 1px solid var(–gold); color: var(–gold-light); border-radius: 6px; padding: 5px 12px; font-size: 0.72rem; font-family: ‘IBM Plex Sans’, sans-serif; font-weight: 600; cursor: pointer; transition: all 0.2s; letter-spacing: 0.04em; }
+.btn-sm:hover { background: var(–gold); color: var(–dark); }
+#outputText { font-size: 0.84rem; line-height: 1.8; color: var(–cream); white-space: pre-wrap; font-family: ‘IBM Plex Sans’, sans-serif; border-top: 1px solid #2a4030; padding-top: 14px; min-height: 80px; }
+
+.loader { display: flex; align-items: center; gap: 10px; color: var(–muted); font-size: 0.82rem; padding: 12px 0; }
+.loader-dots span { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(–gold); animation: bounce 1.2s infinite; margin: 0 2px; }
+.loader-dots span:nth-child(2){ animation-delay: 0.2s; }
+.loader-dots span:nth-child(3){ animation-delay: 0.4s; }
+@keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, var(–dark) 40%); padding: 16px; text-align: center; font-size: 0.65rem; color: #3a5040; letter-spacing: 0.08em; }
+#toast { position: fixed; bottom: 60px; left: 50%; transform: translateX(-50%) translateY(20px); background: var(–green); color: #fff; padding: 8px 20px; border-radius: 20px; font-size: 0.78rem; font-weight: 600; opacity: 0; transition: all 0.3s; pointer-events: none; white-space: nowrap; z-index: 999; }
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: var(–dark); }
+::-webkit-scrollbar-thumb { background: #2a4030; border-radius: 3px; }
+</style>
+
+</head>
+<body>
+
+<header>
+  <div class="flag-stripe"><div class="green"></div><div class="white"></div><div class="green"></div></div>
+  <div class="header-text">
+    <h1>Commercial Section Agent</h1>
+    <p>Pakistan Embassy Beijing · Ministry of Commerce</p>
+  </div>
+  <div class="api-badge">
+    <div class="api-dot"></div>
+    <span>live</span>
+  </div>
+</header>
+
+<div id="mainApp">
+  <div class="tool-grid">
+    <button class="tool-btn active" onclick="selectTool('report')" id="btn-report">
+      <span class="tool-icon">📊</span><span class="tool-label">Monthly Report</span>
+    </button>
+    <button class="tool-btn" onclick="selectTool('correspondence')" id="btn-correspondence">
+      <span class="tool-icon">✉️</span><span class="tool-label">Official Correspondence</span>
+    </button>
+    <button class="tool-btn" onclick="selectTool('minutes')" id="btn-minutes">
+      <span class="tool-icon">📋</span><span class="tool-label">Meeting Minutes</span>
+    </button>
+    <button class="tool-btn" onclick="selectTool('trade')" id="btn-trade">
+      <span class="tool-icon">📈</span><span class="tool-label">Trade Analysis</span>
+    </button>
+  </div>
+
+  <!-- Monthly Report -->
+
+  <div class="panel active" id="panel-report">
+    <h3>📊 Monthly Report Section Drafter</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Report Month</label>
+        <input type="text" id="r-month" placeholder="e.g. February 2026" />
+      </div>
+      <div class="form-group">
+        <label>Section</label>
+        <select id="r-section">
+          <option value="economy">Economy & Trade</option>
+          <option value="investment">Investment Promotion & Facilitation</option>
+          <option value="bilateral">Bilateral Trade Data</option>
+          <option value="activities">Activities & Engagements</option>
+          <option value="market">Market Intelligence</option>
+          <option value="full">Full Monthly Report</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Key Points / Raw Notes</label>
+      <textarea id="r-notes" rows="5" placeholder="e.g.&#10;- Met with MOFCOM official on textile quota&#10;- China imports of Pakistani rice increased 12%&#10;- CPEC SEZ investor delegation visited&#10;- Attended Pakistan-China Business Forum"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Figures / Data to Include</label>
+      <textarea id="r-data" rows="2" placeholder="e.g. Bilateral trade Jan 2026: $2.1B, exports $320M, imports $1.78B"></textarea>
+    </div>
+    <button class="generate-btn" onclick="generate('report')"><span>Generate Report Section</span></button>
+  </div>
+
+  <!-- Correspondence -->
+
+  <div class="panel" id="panel-correspondence">
+    <h3>✉️ Official Correspondence Drafter</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Document Type</label>
+        <select id="c-type">
+          <option value="formal_letter">Formal Letter</option>
+          <option value="invitation">Invitation</option>
+          <option value="acknowledgement">Acknowledgement</option>
+          <option value="follow_up">Follow-up</option>
+          <option value="note_verbale">Note Verbale</option>
+          <option value="whatsapp">WhatsApp / Informal Message</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Recipient Name & Title</label>
+        <input type="text" id="c-recipient" placeholder="e.g. Mr. Zhang Wei, Deputy Director MOFCOM" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Subject / Purpose</label>
+      <input type="text" id="c-subject" placeholder="e.g. Invitation to Pakistan Investment Roundtable" />
+    </div>
+    <div class="form-group">
+      <label>Key Points to Cover</label>
+      <textarea id="c-points" rows="4" placeholder="e.g.&#10;- Date: March 20, venue: Embassy conference room&#10;- Discuss SEZ investment opportunities&#10;- Request confirmation by March 15"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Tone</label>
+      <select id="c-tone">
+        <option value="formal_diplomatic">Formal Diplomatic</option>
+        <option value="semi_formal">Semi-Formal</option>
+        <option value="brief_informal">Brief & Informal</option>
+      </select>
+    </div>
+    <button class="generate-btn" onclick="generate('correspondence')"><span>Draft Correspondence</span></button>
+  </div>
+
+  <!-- Minutes -->
+
+  <div class="panel" id="panel-minutes">
+    <h3>📋 Minutes of Meeting Generator</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Meeting Subject</label>
+        <input type="text" id="m-subject" placeholder="e.g. Pakistan-China Agri Trade Facilitation" />
+      </div>
+      <div class="form-group">
+        <label>Date & Mode</label>
+        <input type="text" id="m-date" placeholder="e.g. March 10, 2026 — In-person" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Participants</label>
+      <input type="text" id="m-participants" placeholder="e.g. Commercial Counsellor, MOFCOM Director, TDAP Rep" />
+    </div>
+    <div class="form-group">
+      <label>Background & Objective</label>
+      <textarea id="m-background" rows="2" placeholder="e.g. Discuss expanding rice & mango export quota under CPFTA Phase-II"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Proceedings / Raw Notes</label>
+      <textarea id="m-notes" rows="5" placeholder="e.g.&#10;- Pakistan side presented export capacity data&#10;- China side raised SPS compliance concerns&#10;- Agreed on joint inspection mechanism&#10;- Next meeting in April"></textarea>
+    </div>
+    <button class="generate-btn" onclick="generate('minutes')"><span>Generate Minutes</span></button>
+  </div>
+
+  <!-- Trade Analysis -->
+
+  <div class="panel" id="panel-trade">
+    <h3>📈 Trade Data Analysis</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Analysis Type</label>
+        <select id="t-type">
+          <option value="bilateral_overview">Pakistan-China Bilateral Overview</option>
+          <option value="export_analysis">Pakistan Export Performance</option>
+          <option value="import_analysis">Import Trends from China</option>
+          <option value="sector_analysis">Sector-Specific Analysis</option>
+          <option value="investment_brief">Investment Brief</option>
+          <option value="cpec_update">CPEC Progress Update</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Time Period</label>
+        <input type="text" id="t-period" placeholder="e.g. Q1 2026 or Jan-Feb 2026" />
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Sector / Commodity</label>
+      <input type="text" id="t-sector" placeholder="e.g. Textile, Rice, Cotton, IT services, Energy" />
+    </div>
+    <div class="form-group">
+      <label>Data / Figures Available</label>
+      <textarea id="t-data" rows="4" placeholder="e.g.&#10;- Total bilateral trade: $23.4B in 2025&#10;- Pakistan exports: $3.1B (+8% YoY)&#10;- Textile exports: $1.2B&#10;- FDI from China: $840M"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Purpose</label>
+      <select id="t-purpose">
+        <option value="ministry_report">Ministry Report</option>
+        <option value="investor_brief">Investor Brief / Pitchbook</option>
+        <option value="internal_note">Internal Note</option>
+        <option value="media_talking_points">Talking Points</option>
+      </select>
+    </div>
+    <button class="generate-btn" onclick="generate('trade')"><span>Generate Analysis</span></button>
+  </div>
+
+  <!-- Output -->
+
+  <div id="outputSection">
+    <h3>
+      <span>Generated Output</span>
+      <div class="output-actions">
+        <button class="btn-sm" onclick="copyOutput()">Copy</button>
+        <button class="btn-sm" onclick="clearOutput()">Clear</button>
+      </div>
+    </h3>
+    <div id="outputText"></div>
+  </div>
+</div>
+
+<div id="toast">✓ Copied to clipboard</div>
+<div class="bottom-bar">COMMERCIAL SECTION · PAKISTAN EMBASSY BEIJING · CONFIDENTIAL USE ONLY</div>
+
+<script>
+let currentTool = 'report';
+
+function selectTool(tool) {
+  currentTool = tool;
+  document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('btn-' + tool).classList.add('active');
+  document.getElementById('panel-' + tool).classList.add('active');
+  document.getElementById('outputSection').style.display = 'none';
+}
+
+function buildPrompt(tool) {
+  const base = `You are a professional assistant to the Commercial Counsellor at Pakistan's Embassy in Beijing, under the Ministry of Commerce. You produce formal, concise, bureaucratic outputs following Pakistan Foreign Service conventions. Use standard diplomatic language.`;
+
+  if (tool === 'report') {
+    const month = document.getElementById('r-month').value || 'current month';
+    const section = document.getElementById('r-section').value;
+    const notes = document.getElementById('r-notes').value;
+    const data = document.getElementById('r-data').value;
+    const sectionMap = { economy:'Economy & Trade', investment:'Investment Promotion & Facilitation', bilateral:'Bilateral Trade Data', activities:'Activities & Engagements', market:'Market Intelligence', full:'Full Monthly Report' };
+    return `${base}\n\nDraft the "${sectionMap[section]}" section of the Monthly Trade & Investment Report for ${month}.\n\nRaw notes:\n${notes||'None.'}\n\nData/figures:\n${data||'None.'}\n\nFormat professionally with appropriate sub-headings. Be factual, concise, and institutional. Use [brackets] for missing data.`;
+  }
+  if (tool === 'correspondence') {
+    const type = document.getElementById('c-type').value;
+    const recipient = document.getElementById('c-recipient').value;
+    const subject = document.getElementById('c-subject').value;
+    const points = document.getElementById('c-points').value;
+    const tone = document.getElementById('c-tone').value;
+    const toneMap = { formal_diplomatic:'formal diplomatic', semi_formal:'semi-formal', brief_informal:'brief and informal (WhatsApp-style, max 5 lines)' };
+    const typeMap = { formal_letter:'formal letter', invitation:'invitation letter', acknowledgement:'acknowledgement letter', follow_up:'follow-up letter', note_verbale:'Note Verbale', whatsapp:'brief WhatsApp message' };
+    return `${base}\n\nDraft a ${typeMap[type]} in ${toneMap[tone]} tone.\nRecipient: ${recipient||'[Recipient]'}\nSubject: ${subject||'[Subject]'}\nKey points:\n${points||'[None]'}`;
+  }
+  if (tool === 'minutes') {
+    return `${base}\n\nDraft formal Minutes of Meeting.\nStructure: Subject, Mode & Date, Participants, Background & Objective, Proceedings, Decisions/Action Points, Next Steps.\n\nSubject: ${document.getElementById('m-subject').value}\nDate & Mode: ${document.getElementById('m-date').value}\nParticipants: ${document.getElementById('m-participants').value}\nBackground: ${document.getElementById('m-background').value}\nRaw Notes:\n${document.getElementById('m-notes').value}\n\nThird person, past tense, formal. List action points with responsible parties at the end.`;
+  }
+  if (tool === 'trade') {
+    const type = document.getElementById('t-type').value;
+    const period = document.getElementById('t-period').value;
+    const sector = document.getElementById('t-sector').value;
+    const data = document.getElementById('t-data').value;
+    const purpose = document.getElementById('t-purpose').value;
+    const purposeMap = { ministry_report:'a Ministry of Commerce report', investor_brief:'an investor pitchbook/brief', internal_note:'an internal analytical note', media_talking_points:'talking points for media/meetings' };
+    return `${base}\n\nPrepare a ${type.replace(/_/g,' ')} for ${period||'current period'}${sector?', focusing on '+sector:''}, for ${purposeMap[purpose]}.\n\nAvailable data:\n${data||'Use general Pakistan-China trade context.'}\n\nInclude key trends, changes, implications for Pakistan's commercial interests, and recommendations. Clear headings, analytical, concise.`;
+  }
+}
+
+async function generate(tool) {
+  const prompt = buildPrompt(tool);
+  const btn = document.querySelector(`#panel-${tool} .generate-btn`);
+  const output = document.getElementById('outputSection');
+  const outputText = document.getElementById('outputText');
+
+  btn.disabled = true;
+  btn.innerHTML = `<div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div><span>Generating...</span></div>`;
+  output.style.display = 'block';
+  outputText.innerHTML = `<div class="loader"><div class="loader-dots"><span></span><span></span><span></span></div><span>Claude is drafting your document...</span></div>`;
+  output.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  try {
+    const response = await fetch('/api/generate', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ prompt })
+    });
+    const data = await response.json();
+    if (data.error) throw new Error(data.error);
+    outputText.textContent = data.result;
+  } catch (err) {
+    outputText.textContent = `Error: ${err.message}`;
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '<span>Generate</span>';
+  }
+}
+
+function copyOutput() {
+  const text = document.getElementById('outputText').textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2200);
+  });
+}
+function clearOutput() {
+  document.getElementById('outputSection').style.display = 'none';
+  document.getElementById('outputText').textContent = '';
+}
+</script>
+
+</body>
+</html>
